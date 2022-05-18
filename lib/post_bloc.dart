@@ -24,6 +24,8 @@ class PostBloc {
     eventStream.listen((event) async {
       print("some event");
       if (event == PostAction.Get) {
+        // awaitを付けないとレスポンスが返ってくる前に次の処理にいってしまうので
+        // 何も表示されない
         await http.get(Uri.parse(apiEndPoint)).then((res) {
           var responseBody = utf8.decode(res.bodyBytes);
           var jsonResponse = json.decode(responseBody).toList();
